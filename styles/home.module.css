@@ -64,3 +64,32 @@
   background: black;
   cursor: pointer;
 }
+
+.selectOptionContainer {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.selectOptionContainer section {
+  border: 2px solid black;
+  border-radius: 15px;
+}
+
+.optionIcon {
+  margin: 10px;
+  font-size: 30px;
+}
+
+.optionIcon:hover {
+  color: red;
+  cursor: pointer;
+}
+
+.optionIconActive {
+  margin: 10px;
+  font-size: 30px;
+  color: red;
+}

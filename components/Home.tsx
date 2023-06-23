@@ -1,14 +1,15 @@
-"use client"
+"use client";
 import React, { useState, useEffect } from "react";
 import style from "../styles/home.module.css";
 import { invoke } from "@tauri-apps/api/tauri";
+import { AiFillEyeInvisible, AiOutlinePoweroff } from "react-icons/ai";
 
 const Home: React.FC = () => {
-
   const [Hours, setHours] = useState(0);
   const [Minutes, setMinutes] = useState(0);
   const [Seconds, setSeconds] = useState(0);
   const [Active, setActive] = useState(false);
+  const [Option, setOption] = useState("off")
 
   useEffect(() => {
     {
@@ -26,7 +27,7 @@ const Home: React.FC = () => {
             }
             if (Seconds === 0 && Minutes === 0 && Hours === 0) {
               setActive(!Active);
-              invoke('shut_down');
+              {Option === "off" ? invoke("shut_down") : invoke("to_sleep")}
             }
           }, 1000)
         : null;
@@ -34,41 +35,53 @@ const Home: React.FC = () => {
   }, [Hours, Minutes, Seconds, Active]);
 
   return (
-    <div className={style.homeContainer}>
-      <h1>Set time interval</h1>
-      <div className={style.setTimeContainer}>
+    <>
+      <div className={style.selectOptionContainer}>
         <section>
-          <h1>Hours</h1>
-          <input
-            type="text"
-            pattern="[0-9]*"
-            onChange={(e) => setHours(Number(e.target.value))}
-          />
-        </section>
-        <section>
-          <h1>Minutes</h1>
-          <input
-            type="text"
-            pattern="[0-9]*"
-            onChange={(e) => setMinutes(Number(e.target.value))}
-          />
-        </section>
-        <section>
-          <h1>Seconds</h1>
-          <input
-            type="text"
-            pattern="[0-9]*"
-            onChange={(e) => setSeconds(Number(e.target.value))}
-          />
+          <AiOutlinePoweroff className={Option === "off" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("off")}/>
+          <AiFillEyeInvisible  className={Option === "sleep" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("sleep")}/>
         </section>
       </div>
-      <button onClick={() => setActive(!Active)}>Start</button>
-      <section className={style.timerCountdown}>
-        <article>
-          <h1>{Hours<10 ? `0${Hours}` : Hours}:{Minutes<10 ? `0${Minutes}` : Minutes}:{Seconds<10 ? `0${Seconds}` : Seconds}</h1>
-        </article>
-      </section>
-    </div>
+      <div className={style.homeContainer}>
+        <h1>Set time interval</h1>
+        <div className={style.setTimeContainer}>
+          <section>
+            <h1>Hours</h1>
+            <input
+              type="text"
+              pattern="[0-9]*"
+              onChange={(e) => setHours(Number(e.target.value))}
+            />
+          </section>
+          <section>
+            <h1>Minutes</h1>
+            <input
+              type="text"
+              pattern="[0-9]*"
+              onChange={(e) => setMinutes(Number(e.target.value))}
+            />
+          </section>
+          <section>
+            <h1>Seconds</h1>
+            <input
+              type="text"
+              pattern="[0-9]*"
+              onChange={(e) => setSeconds(Number(e.target.value))}
+            />
+          </section>
+        </div>
+        <button onClick={() => setActive(!Active)}>Start</button>
+        <section className={style.timerCountdown}>
+          <article>
+            <h1>
+              {Hours < 10 ? `0${Hours}` : Hours}:
+              {Minutes < 10 ? `0${Minutes}` : Minutes}:
+              {Seconds < 10 ? `0${Seconds}` : Seconds}
+            </h1>
+          </article>
+        </section>
+      </div>
+    </>
   );
 };
 
