@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import style from "../styles/home.module.css";
 import { invoke } from "@tauri-apps/api/tauri";
 import { AiFillEyeInvisible, AiOutlinePoweroff, AiOutlineSync } from "react-icons/ai";
+import {BsMoonFill} from 'react-icons/bs';
 
 const Home: React.FC = () => {
   const [Hours, setHours] = useState(0);
@@ -41,8 +42,8 @@ const Home: React.FC = () => {
       <div className={style.selectOptionContainer}>
         <section>
           <AiOutlinePoweroff className={Option === "off" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("off")}/>
-          <AiFillEyeInvisible  className={Option === "sleep" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("sleep")}/>
           <AiOutlineSync className={Option === "restart" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("restart")}/>
+          <BsMoonFill  className={Option === "sleep" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("sleep")}/>
         </section>
       </div>
       <div className={style.homeContainer}>
