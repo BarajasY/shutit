@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import style from "../styles/home.module.css";
 import { invoke } from "@tauri-apps/api/tauri";
-import { AiFillEyeInvisible, AiOutlinePoweroff } from "react-icons/ai";
+import { AiFillEyeInvisible, AiOutlinePoweroff, AiOutlineSync } from "react-icons/ai";
 
 const Home: React.FC = () => {
   const [Hours, setHours] = useState(0);
@@ -27,7 +27,9 @@ const Home: React.FC = () => {
             }
             if (Seconds === 0 && Minutes === 0 && Hours === 0) {
               setActive(!Active);
-              {Option === "off" ? invoke("shut_down") : invoke("to_sleep")}
+              {Option === "off" ? invoke("shut_down") : null}
+              {Option === "sleep" ? invoke("to_sleep") : null}
+              {Option === "restart" ? invoke("restart") : null}
             }
           }, 1000)
         : null;
@@ -40,6 +42,7 @@ const Home: React.FC = () => {
         <section>
           <AiOutlinePoweroff className={Option === "off" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("off")}/>
           <AiFillEyeInvisible  className={Option === "sleep" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("sleep")}/>
+          <AiOutlineSync className={Option === "restart" ? style.optionIconActive : style.optionIcon} onClick={() => setOption("restart")}/>
         </section>
       </div>
       <div className={style.homeContainer}>

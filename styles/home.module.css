@@ -84,12 +84,12 @@
 }
 
 .optionIcon:hover {
-  color: red;
+  color: #2274af;
   cursor: pointer;
 }
 
 .optionIconActive {
   margin: 10px;
   font-size: 30px;
-  color: red;
+  color: #2274af;
 }
